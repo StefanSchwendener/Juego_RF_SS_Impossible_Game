@@ -59,7 +59,7 @@ void collision2();
 void jump2();
 extern uint8_t fondo[];
 extern uint8_t chonk[];
-extern uint8_t jerry[];
+extern uint8_t cubo2[];
 //***************************************************************************************************************************************
 // Variables
 //***************************************************************************************************************************************
@@ -70,6 +70,8 @@ uint8_t yB = 176;
 uint8_t yB2 = 176;
 uint8_t fallRateInt = 0;
 float fallRate = 0;
+uint8_t fallRateInt2 = 0;
+float fallRate2 = 0;
 ///Botones para los jugadores 
 uint8_t buttonStateOld = 0;
 const int buttonPin = PA_6;  
@@ -307,7 +309,7 @@ if(Multiplayer == 1){
   Serial.println(Points);
   buttonState = digitalRead(buttonPin);
     LCD_Sprite(150,yB,32,42,cubo1,6,animc,0,0);
-    LCD_Sprite(110,yB,32,42,cubo1,6,animc,0,0);
+    LCD_Sprite(110,yB,32,42,cubo2,6,animc,0,0);
   FillRect(0, 187, 35, 30, 0x421b);
 
 
@@ -815,21 +817,23 @@ void jump(){
 ///////////////////////////////////
 void jump2(){
     fallRate = 0 ;
+    fallRate2 = 0 ;
     fallRateInt= int(fallRate);
+    fallRateInt2= int(fallRate2);
     yB+=fallRateInt;
-    yB2+=fallRateInt; 
+    yB2+=fallRateInt2; 
     if(grounded == true){
     if (buttonState == LOW && buttonStateOld == HIGH) {
       fallRate = -100;
       digitalWrite(PA_7,HIGH);
     }
     if (buttonState2 == LOW && buttonStateOld2 == HIGH) {
-      fallRate = -100;
+      fallRate2 = -100;
       digitalWrite(PA_7,HIGH);
     }
     fallRateInt= int(fallRate);
     yB+=fallRateInt; 
-    yB2+=fallRateInt; 
+    yB2+=fallRateInt2; 
     FillRect(150, yB-42, 32, 45, 0x421b);
     FillRect(110, yB-42, 32, 45, 0x421b);
     }
@@ -840,11 +844,16 @@ void jump2(){
       fallRate = 4;
       digitalWrite(PA_7,LOW);
     }
+    if( yB2<176 ){
+      fallRate2 = 4;
+      digitalWrite(PA_7,LOW);
+    }
     FillRect(150, 176, 32, 42, 0x421b);
     FillRect(110, 176, 32, 42, 0x421b);
     fallRateInt= int(fallRate);
+    fallRateInt2= int(fallRate2);
     yB+=fallRateInt; 
-    yB2+=fallRateInt; 
+    yB2+=fallRateInt2; 
     }
 }
 
