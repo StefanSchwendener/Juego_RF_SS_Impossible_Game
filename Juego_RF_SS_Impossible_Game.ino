@@ -66,8 +66,8 @@ extern uint8_t papyrus[];
 // Variables
 //***************************************************************************************************************************************
 int jumps = PA_7;
-uint8_t yB = 206;
-uint8_t yB2 = 202;
+uint8_t yB = 189;
+uint8_t yB2 = 185;
 uint8_t fallRateInt = 0;
 float fallRate = 0;
 uint8_t fallRateInt2 = 0;
@@ -164,10 +164,10 @@ void loop() {
   xspike2 = xspike + 100;
   xspike3 = xspike2 + 200;
   
-  if(yB >= 206){
+  if(yB >= 189){
     grounded = true;
   }
-  else if(yB < 206){
+  else if(yB < 189){
     grounded = false;
   }
   Points ++;
@@ -194,30 +194,30 @@ void loop() {
 
 xspike += spikescroll;
 if(Points<200){
-  if(xspike<320){
+  if(xspike<292){
   LCD_Sprite(xspike,189,27,29,spikes,7,animsp,0,0);
   FillRect(xspike+27,189,27,29,0x421b);   
   }
-  else if(xspike>320){
+  else if(xspike>292){
   xspike = 292;
   }
 }
 
 if(Points>=200 && Points<500){
   xspike2 = xspike + 100;
-  if(xspike<320){
+  if(xspike<292){
   LCD_Sprite(xspike,189,27,29,spikes,7,animsp,0,0);
   FillRect(xspike+27,189,27,29,0x421b);   
   }
-  else if(xspike>320){
+  else if(xspike>292){
   xspike = 292;
   }
 
-  if(xspike2<320){
+  if(xspike2<292){
   LCD_Sprite(xspike2,189,27,29,spikes,7,animsp,0,0);
   FillRect(xspike2+27,189,27,29,0x421b);   
   }
-  else if(xspike2>320){
+  else if(xspike2>292){
   xspike2 = xspike + 250;
   }
   
@@ -226,27 +226,27 @@ if(Points>=200 && Points<500){
 if(Points>=500 /*&& Points<1000*/){
   xspike2 = xspike + 250;
   xspike3 = xspike2 + 250;
-  if(xspike<320){
+  if(xspike<292){
   LCD_Sprite(xspike,189,27,29,spikes,7,animsp,0,0);
   FillRect(xspike+27,189,27,29,0x421b);   
   }
-  else if(xspike>320){
+  else if(xspike>292){
   xspike = 292;
   }
 
-  if(xspike2<320){
+  if(xspike2<292){
   LCD_Sprite(xspike2,189,27,29,spikes,7,animsp,0,0);
   FillRect(xspike2+27,189,27,29,0x421b);   
   }
-  else if(xspike2>320){
+  else if(xspike2>292){
   xspike2 = xspike + 250;
   }
 
-  if(xspike3<320){
+  if(xspike3<292){
   LCD_Sprite(xspike3,189,27,29,spikes,7,animsp,0,0);
   FillRect(xspike3+27,189,27,29,0x421b);   
   }
-  else if(xspike3>320){
+  else if(xspike3>292){
   xspike3 = xspike2 + 250;
   }
 }
@@ -321,30 +321,30 @@ if(Multiplayer == 1){
 
 xspike += spikescroll;
 if(Points<200){
-  if(xspike<320){
+  if(xspike<292){
   LCD_Sprite(xspike,189,27,29,spikes,7,animsp,0,0);
   FillRect(xspike+27,189,27,29,0x421b);   
   }
-  else if(xspike>320){
+  else if(xspike>292){
   xspike = 200;
   }
 }
 
 if(Points>=200 && Points<500){
   xspike2 = xspike + 100;
-  if(xspike<320){
+  if(xspike<292){
   LCD_Sprite(xspike,189,27,29,spikes,7,animsp,0,0);
   FillRect(xspike+27,189,27,29,0x421b);   
   }
-  else if(xspike>320){
+  else if(xspike>292){
   xspike = 200;
   }
 
-  if(xspike2<320){
+  if(xspike2<292){
   LCD_Sprite(xspike2,189,27,29,spikes,7,animsp,0,0);
   FillRect(xspike2+27,189,27,29,0x421b);   
   }
-  else if(xspike2>320){
+  else if(xspike2>292){
   xspike2 = xspike + 250;
   }
   
@@ -796,16 +796,16 @@ void jump(){
     }
     fallRateInt= int(fallRate);
     yB+=fallRateInt; 
-    //FillRect(150, yB-30, 16, 30, 0x421b);
+    FillRect(150, yB+99, 16, 32, 0x421b);
     
     }
 
     
     if(grounded == false){
-    if( yB<176 ){
+    if( yB<189 ){
       fallRate = 4;
       digitalWrite(PA_7,LOW);
-      FillRect(150, 200, 16, 39, 0x421b);
+      //FillRect(150, 200, 16, 39, 0x421b);
     }
     FillRect(150, yB-4, 16, 4, 0x421b);
     
@@ -826,35 +826,44 @@ void jump2(){
       fallRate = -100;
       digitalWrite(PA_7,HIGH);
     }
-    if (buttonState2 == LOW && buttonStateOld2 == HIGH) {
+    fallRateInt= int(fallRate);
+    yB+=fallRateInt; 
+    FillRect(150, yB+100, 16, 30, 0x421b);
+    }
+
+     if(grounded2 == true){
+      if (buttonState2 == LOW && buttonStateOld2 == HIGH) {
       fallRate2 = -100;
       digitalWrite(PA_7,HIGH);
     }
-    fallRateInt= int(fallRate);
-    fallRateInt2= int(fallRate2);
-    yB+=fallRateInt; 
-    yB2+=fallRateInt2; 
-    FillRect(150, yB-30, 16, 30, 0x421b);
-    FillRect(110, yB2-40, 20, 40, 0x421b);
-    }
+      fallRateInt2= int(fallRate2);
+      yB2+=fallRateInt2; 
+      FillRect(110, yB2-100, 20, 40, 0x421b);
+     }
 
     
     if(grounded == false){
-    if( yB<176 ){
+    if( yB<189 ){
       fallRate = 4;
       digitalWrite(PA_7,LOW);
+      
     }
-    if( yB2<176 ){
+    fallRateInt= int(fallRate);
+    yB+=fallRateInt; 
+    FillRect(150, yB-4, 16, 4, 0x421b);
+    }
+
+    if(grounded2 == false){
+      if( yB2<185 ){
       fallRate2 = 4;
       digitalWrite(PA_7,LOW);
     }
-    FillRect(150, 176, 32, 42, 0x421b);
-    FillRect(110, 176, 32, 42, 0x421b);
-    fallRateInt= int(fallRate);
     fallRateInt2= int(fallRate2);
-    yB+=fallRateInt; 
-    yB2+=fallRateInt2; 
+    yB2+=fallRateInt2;
+    FillRect(110, yB2-4, 20, 4, 0x421b);
     }
+    
+     
 }
 
 //////////////////////
