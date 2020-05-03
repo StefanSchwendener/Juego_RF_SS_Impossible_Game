@@ -66,8 +66,8 @@ extern uint8_t papyrus[];
 // Variables
 //***************************************************************************************************************************************
 int jumps = PA_7;
-uint8_t yB = 209;
-uint8_t yB2 = 199;
+uint8_t yB = 206;
+uint8_t yB2 = 202;
 uint8_t fallRateInt = 0;
 float fallRate = 0;
 uint8_t fallRateInt2 = 0;
@@ -164,17 +164,16 @@ void loop() {
   xspike2 = xspike + 100;
   xspike3 = xspike2 + 200;
   
-  if(yB >= 176){
+  if(yB >= 206){
     grounded = true;
   }
-  else if(yB < 176){
+  else if(yB < 206){
     grounded = false;
   }
   Points ++;
   Serial.println(Points);
   buttonState = digitalRead(buttonPin);
-    //Game_Start();
-    LCD_Sprite(150,yB,16,32,sans,4,animc,0,0);
+    LCD_Sprite(150,yB,16,30,sans,4,animc,0,0);
   
 
   
@@ -200,7 +199,7 @@ if(Points<200){
   FillRect(xspike+27,189,27,29,0x421b);   
   }
   else if(xspike>320){
-  xspike = 200;
+  xspike = 292;
   }
 }
 
@@ -211,7 +210,7 @@ if(Points>=200 && Points<500){
   FillRect(xspike+27,189,27,29,0x421b);   
   }
   else if(xspike>320){
-  xspike = 200;
+  xspike = 292;
   }
 
   if(xspike2<320){
@@ -225,14 +224,14 @@ if(Points>=200 && Points<500){
 }
 
 if(Points>=500 /*&& Points<1000*/){
-  xspike2 = xspike + 100;
-  xspike3 = xspike2 + 100;
+  xspike2 = xspike + 250;
+  xspike3 = xspike2 + 250;
   if(xspike<320){
   LCD_Sprite(xspike,189,27,29,spikes,7,animsp,0,0);
   FillRect(xspike+27,189,27,29,0x421b);   
   }
   else if(xspike>320){
-  xspike = 200;
+  xspike = 292;
   }
 
   if(xspike2<320){
@@ -354,27 +353,27 @@ if(Points>=200 && Points<500){
 if(Points>=500 /*&& Points<1000*/){
   xspike2 = xspike + 100;
   xspike3 = xspike2 + 100;
-  if(xspike<320){
+  if(xspike<292){
   LCD_Sprite(xspike,189,27,29,spikes,7,animsp,0,0);
   FillRect(xspike+27,189,27,29,0x421b);   
   }
-  else if(xspike>320){
+  else if(xspike>292){
   xspike = 200;
   }
 
-  if(xspike2<320){
+  if(xspike2<292){
   LCD_Sprite(xspike2,189,27,29,spikes,7,animsp,0,0);
   FillRect(xspike2+27,189,27,29,0x421b);   
   }
-  else if(xspike2>320){
+  else if(xspike2>292){
   xspike2 = xspike + 250;
   }
 
-  if(xspike3<320){
+  if(xspike3<292){
   LCD_Sprite(xspike3,189,27,29,spikes,7,animsp,0,0);
   FillRect(xspike3+27,189,27,29,0x421b);   
   }
-  else if(xspike3>320){
+  else if(xspike3>292){
   xspike3 = xspike2 + 250;
   }
 }
@@ -391,8 +390,8 @@ FillRect(xspike+32,120,32,17,0x421b);
 }
 
 if(plane == 2){
-LCD_Bitmap(xspike-60, 150, 32, 17, platform);
-FillRect(xspike-60+32,150,32,17,0x421b);
+//LCD_Bitmap(xspike-60, 150, 32, 17, platform);
+//FillRect(xspike-60+32,150,32,17,0x421b);
 }
 
 FillRect(0,150,34,17,0x421b);
@@ -797,7 +796,8 @@ void jump(){
     }
     fallRateInt= int(fallRate);
     yB+=fallRateInt; 
-    FillRect(150, yB-42, 32, 45, 0x421b);
+    //FillRect(150, yB-30, 16, 30, 0x421b);
+    
     }
 
     
@@ -805,8 +805,10 @@ void jump(){
     if( yB<176 ){
       fallRate = 4;
       digitalWrite(PA_7,LOW);
+      FillRect(150, 200, 16, 39, 0x421b);
     }
-    FillRect(150, 176, 32, 42, 0x421b);
+    FillRect(150, yB-4, 16, 4, 0x421b);
+    
     fallRateInt= int(fallRate);
     yB+=fallRateInt; 
     }
@@ -832,8 +834,8 @@ void jump2(){
     fallRateInt2= int(fallRate2);
     yB+=fallRateInt; 
     yB2+=fallRateInt2; 
-    FillRect(150, yB-42, 32, 45, 0x421b);
-    FillRect(110, yB-42, 32, 45, 0x421b);
+    FillRect(150, yB-30, 16, 30, 0x421b);
+    FillRect(110, yB2-40, 20, 40, 0x421b);
     }
 
     
@@ -858,9 +860,9 @@ void jump2(){
 //////////////////////
 void collision(){
 uint8_t cubey1 = yB;
-uint8_t cubey2 = yB+42;
+uint8_t cubey2 = yB+30;
 uint8_t cubex1 = 150;
-uint8_t cubex2 = 182;
+uint8_t cubex2 = 166;
 
 uint8_t spikey1 = 187;
 uint8_t spikey2 = 187+29;
@@ -1023,7 +1025,10 @@ void gameover(){
    String score = "Score:";
   LCD_Print(score, 200, 50, 2, 0x0000, 0xD082);
   Points = 0;
-  xspike = 212;
+  xspike = 292;
+  yB = 187;
+  yB2 = 184;
+  
   }
 
 void winner(void){
