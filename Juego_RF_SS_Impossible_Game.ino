@@ -309,7 +309,7 @@ if(Multiplayer == 1){
   Serial.println(Points);
   buttonState = digitalRead(buttonPin);
     LCD_Sprite(150,yB,32,42,cubo1,6,animc,0,0);
-    LCD_Sprite(110,yB,32,42,cubo2,6,animc,0,0);
+    LCD_Sprite(110,yB2,32,42,cubo2,6,animc,0,0);
   FillRect(0, 187, 35, 30, 0x421b);
 
 
@@ -832,6 +832,7 @@ void jump2(){
       digitalWrite(PA_7,HIGH);
     }
     fallRateInt= int(fallRate);
+    fallRateInt2= int(fallRate2);
     yB+=fallRateInt; 
     yB2+=fallRateInt2; 
     FillRect(150, yB-42, 32, 45, 0x421b);
@@ -884,7 +885,7 @@ if (Points<200){
  }
 }
 if (Points>=200 && Points<500){
-  if((cubex2>=spike3x1) && (cubex1<=spike3x2) &&(cubey2>=spike3y1)){
+  if((cubex2>=spikex1) && (cubex1<=spikex2) &&(cubey2>=spikey1)){
   gameover();   
  }
   
@@ -941,7 +942,7 @@ if (Points<200){
  }
 }
 if (Points>=200 && Points<500){
-  if((cube2x2>=spike3x1) && (cube2x1<=spike3x2) &&(cube2y2>=spike3y1)){
+  if((cube2x2>=spikex1) && (cube2x1<=spikex2) &&(cube2y2>=spikey1)){
   gameover();   
  }
   
@@ -949,7 +950,7 @@ if (Points>=200 && Points<500){
   gameover();   
  }
 
- if((cubex2>=spike3x1) && (cubex1<=spike3x2) &&(cubey2>=spike3y1)){
+ if((cubex2>=spikex1) && (cubex1<=spikex2) &&(cubey2>=spikey1)){
   gameover();   
  }
   
