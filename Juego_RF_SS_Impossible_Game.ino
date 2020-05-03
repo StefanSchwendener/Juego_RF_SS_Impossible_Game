@@ -61,15 +61,13 @@ extern uint8_t fondo[];
 //extern uint8_t chonk[];
 //extern uint8_t cubo2[];
 extern uint8_t sans[];
-//extern uint8_t papyrus[];
+extern uint8_t papyrus[];
 //***************************************************************************************************************************************
 // Variables
 //***************************************************************************************************************************************
-//uint8_t xP = 300;
 int jumps = PA_7;
-uint8_t yP = 100;
-uint8_t yB = 176;
-uint8_t yB2 = 176;
+uint8_t yB = 209;
+uint8_t yB2 = 199;
 uint8_t fallRateInt = 0;
 float fallRate = 0;
 uint8_t fallRateInt2 = 0;
@@ -82,9 +80,6 @@ uint8_t buttonState = 0;
 const int buttonPin2 = PA_5;  
 uint8_t buttonState2; 
 uint8_t buttonStateOld2 = 0;
-
-uint8_t topok = 1;
-uint8_t bottomok = 1;
 uint8_t xspike = 200;
 uint8_t xspike2; 
 uint8_t xspike3; 
@@ -146,9 +141,7 @@ Game_Start();
   String text1 = "Impossible Game!";
   LCD_Print(text1, 30, 20, 2, 0xffff, 0xD082);
   
-
- spikeon = 0;
- 
+ xspike = 212;
  make_floor();
   String score = "Score:";
   LCD_Print(score, 200, 50, 2, 0x0000, 0xD082);
@@ -913,14 +906,14 @@ if (Points>=500){
 ///////////////////////////////
 void collision2(){
 uint8_t cubey1 = yB;
-uint8_t cubey2 = yB+42;
+uint8_t cubey2 = yB+30;
 uint8_t cubex1 = 150;
-uint8_t cubex2 = 182;
+uint8_t cubex2 = 166;
 
 uint8_t cube2y1 = yB2;
-uint8_t cube2y2 = yB2+42;
+uint8_t cube2y2 = yB2+40;
 uint8_t cube2x1 = 110;
-uint8_t cube2x2 = 142;
+uint8_t cube2x2 = 130;
 
 uint8_t spikey1 = 187;
 uint8_t spikey2 = 187+29;
@@ -991,8 +984,6 @@ void animate(){
 animcstate += 3;
 animspstate += 3;
 animc = (animcstate/10)%4;
-animjerry = (animcstate/10)%9;
-animchonk = (animcstate/10)%14;
 animsp = (animspstate/10)%7;
 }
 void gameover(){
@@ -1020,10 +1011,9 @@ void gameover(){
       Multiplayer = 0;
     }
     if(buttonState2 == LOW){
-      //LCD_Sprite(55,170,28,35,chonk,14,animchonk,0,0);
-      FillRect(55,155,28,35,0x00ff);
       Multiplayer = 1;
       Start = true;
+      digitalWrite(PA_7,HIGH);
     }
   }
   FillRect(0, 0, 319, 219, 0x421b);
@@ -1033,7 +1023,7 @@ void gameover(){
    String score = "Score:";
   LCD_Print(score, 200, 50, 2, 0x0000, 0xD082);
   Points = 0;
-  xspike = 217;
+  xspike = 212;
   }
 
 void winner(void){
