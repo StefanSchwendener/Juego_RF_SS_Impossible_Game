@@ -58,8 +58,10 @@ void jump();
 void collision2();
 void jump2();
 extern uint8_t fondo[];
-extern uint8_t chonk[];
-extern uint8_t cubo2[];
+//extern uint8_t chonk[];
+//extern uint8_t cubo2[];
+extern uint8_t sans[];
+//extern uint8_t papyrus[];
 //***************************************************************************************************************************************
 // Variables
 //***************************************************************************************************************************************
@@ -105,6 +107,8 @@ uint8_t cube2y1 = 0;
 uint8_t cube2y2 = 0;
 uint8_t cube2x1 = 0;
 uint8_t cube2x2 = 0;
+uint8_t p1w = 0;
+uint8_t p2w = 0;
 String Puntos;
 //***************************************************************************************************************************************
 // Inicialización
@@ -127,13 +131,13 @@ Game_Start();
   animate();
     if(buttonState == LOW){
       Start = true;
-      LCD_Sprite(55,170,28,35,chonk,14,0,0,0);
+      //LCD_Sprite(55,170,28,35,chonk,14,0,0,0);
       digitalWrite(PA_7,HIGH);
       Multiplayer = 0;
     }
     if(buttonState2 == LOW){
       Start = true;
-      LCD_Sprite(55,170,28,35,chonk,14,1,0,0);
+      //LCD_Sprite(55,170,28,35,chonk,14,1,0,0);
       FillRect(55,155,28,35,0x00ff);
       Multiplayer = 1;
     }
@@ -175,10 +179,9 @@ void loop() {
   }
   Points ++;
   Serial.println(Points);
-  main_game:
   buttonState = digitalRead(buttonPin);
     //Game_Start();
-    LCD_Sprite(150,yB,32,42,cubo1,6,animc,0,0);
+    LCD_Sprite(150,yB,16,32,sans,4,animc,0,0);
   
 
   
@@ -308,8 +311,9 @@ if(Multiplayer == 1){
   Points ++;
   Serial.println(Points);
   buttonState = digitalRead(buttonPin);
-    LCD_Sprite(150,yB,32,42,cubo1,6,animc,0,0);
-    LCD_Sprite(110,yB2,32,42,cubo2,6,animc,0,0);
+  buttonState2 = digitalRead(buttonPin2);
+    LCD_Sprite(150,yB,16,32,sans,4,animc,0,0);
+    LCD_Sprite(110,yB2,20,40,papyrus,4,animc,0,0);
   FillRect(0, 187, 35, 30, 0x421b);
 
 
@@ -784,7 +788,7 @@ void Game_Start(){
   LCD_Print(Start2, 10, 70, 2, 0xffff, 0xD082);
   LCD_Print(Player1, 100, 130, 1, 0xffff, 0xD082);
   LCD_Print(Player2, 100, 180, 1, 0xffff, 0xD082);
-  LCD_Sprite(55,120,28,35,chonk,14,animchonk,0,0);
+  //LCD_Sprite(55,120,28,35,chonk,14,animchonk,0,0);
   xspike = 250;
   
 }
@@ -986,7 +990,7 @@ if (Points>=500){
 void animate(){
 animcstate += 3;
 animspstate += 3;
-animc = (animcstate/10)%6;
+animc = (animcstate/10)%4;
 animjerry = (animcstate/10)%9;
 animchonk = (animcstate/10)%14;
 animsp = (animspstate/10)%7;
@@ -1016,7 +1020,7 @@ void gameover(){
       Multiplayer = 0;
     }
     if(buttonState2 == LOW){
-      LCD_Sprite(55,170,28,35,chonk,14,animchonk,0,0);
+      //LCD_Sprite(55,170,28,35,chonk,14,animchonk,0,0);
       FillRect(55,155,28,35,0x00ff);
       Multiplayer = 1;
       Start = true;
@@ -1031,3 +1035,15 @@ void gameover(){
   Points = 0;
   xspike = 217;
   }
+
+void winner(void){
+ if(p1w == 1){
+   String text1 = "Player 1 Wins";
+  LCD_Print(text1, 30, 20, 2, 0xffff, 0xD082);
+ }
+
+ if (p2w == 1){
+  String text1 = "Player 2 Wins";
+  LCD_Print(text1, 30, 20, 2, 0xffff, 0xD082);
+ }
+}
