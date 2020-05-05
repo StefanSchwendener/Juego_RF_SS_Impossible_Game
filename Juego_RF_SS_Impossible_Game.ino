@@ -62,6 +62,7 @@ extern uint8_t fondo[];
 //extern uint8_t cubo2[];
 extern uint8_t sans[];
 extern uint8_t papyrus[];
+extern uint8_t logo[];
 //***************************************************************************************************************************************
 // Variables
 //***************************************************************************************************************************************
@@ -772,14 +773,15 @@ void make_floor(){
 void Game_Start(){
   //FillRect(0, 0, 319, 219, 0x00ff);
   LCD_Bitmap(0, 0, 320, 240, fondo);
-  String Start1 = "Welcome to:";
-  String Start2 = "THE IMPOSSIBLE GAME";
+  LCD_Bitmap(80, 40, 154, 77, logo);
+  String Start1 = "Press 1 ->"; 
+  String Start2 = "Press 2 ->";
   String Player1 = "Single Player";
   String Player2 = "Multiplayer";
-  LCD_Print(Start1, 50, 50, 1, 0xFF00, 0x0000);
-  LCD_Print(Start2, 10, 70, 2, 0xffff, 0xD082);
-  LCD_Print(Player1, 100, 130, 1, 0xffff, 0xD082);
-  LCD_Print(Player2, 100, 180, 1, 0xffff, 0xD082);
+  LCD_Print(Start1, 10, 130, 1, 0xFF00, 0x0000);
+  LCD_Print(Start2, 10, 180, 1, 0xff00, 0x0000);
+  LCD_Print(Player1, 100, 130, 2, 0xffff, 0xD077);
+  LCD_Print(Player2, 100, 180, 2, 0xffff, 0xC088);
   //LCD_Sprite(55,120,28,35,chonk,14,animchonk,0,0);
   xspike = 250;
   
@@ -838,7 +840,7 @@ void jump2(){
     }
       fallRateInt2= int(fallRate2);
       yB2+=fallRateInt2; 
-      FillRect(110, yB2-100, 20, 40, 0x421b);
+      FillRect(110, yB2+100, 20, 40, 0x421b);
      }
 
     
@@ -1003,7 +1005,7 @@ if (Points>=500){
  }
 }
 }
-///////////////
+
 void animate(){
 animcstate += 3;
 animspstate += 3;
