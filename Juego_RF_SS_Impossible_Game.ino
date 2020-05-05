@@ -27,6 +27,8 @@
 #include "bitmaps.h"
 #include "font.h"
 #include "lcd_registers.h"
+#include <SPI.h>
+#include <SD.h>
 
 #define LCD_RST PD_0
 #define LCD_CS PD_1
@@ -58,6 +60,7 @@ void collision();
 void jump();
 void collision2();
 void jump2();
+void sd_highscore();
 extern uint8_t fondo[];
 //extern uint8_t chonk[];
 //extern uint8_t cubo2[];
@@ -107,6 +110,8 @@ uint8_t cube2x2 = 0;
 uint8_t p1w = 0;
 uint8_t p2w = 0;
 String Puntos;
+
+File myFile;
 //***************************************************************************************************************************************
 // Inicialización
 //***************************************************************************************************************************************
@@ -1032,6 +1037,7 @@ void gameover(){
   while(!Start){
   buttonState2 = digitalRead(buttonPin2);
   buttonState = digitalRead(buttonPin);
+  //sd_highscore();
     if(buttonState == LOW){
       Start = true;
       digitalWrite(PA_7,HIGH);
@@ -1147,4 +1153,38 @@ void winner(void){
   p2w = 0;
   p1w = 0;
  }
+}
+
+void sd_highscore(){
+  Serial.begin(9600);
+   Serial.print("Checking Highscores");
+   if (!SD.begin(4)) {
+    Serial.println("None Available!");
+    return;
+  }
+  Serial.println("We Found the Kush #420.");
+  myFile = SD.open("highscore.txt", FILE_WRITE);
+  if (myFile) {
+    Serial.print("Are you worthy of the hall of fame?");
+    myFile.println(Puntos);
+    // close the file:
+    myFile.close();
+    Serial.println("done.");
+    } else {
+    // if the file didn't open, print an error:
+    Serial.println("You Weren't Worthy ");
+  }
+
+  // re-open the file for reading:
+  myFile = SD.open("highscore.txt");
+  if (myFile) {
+  Serial.println("Highscore List:");
+   while (myFile.available()) {
+      Serial.write(myFile.read());
+    }
+     myFile.close();
+  } else {
+    // if the file didn't open, print an error:
+    Serial.println("Empty");
+  }
 }
