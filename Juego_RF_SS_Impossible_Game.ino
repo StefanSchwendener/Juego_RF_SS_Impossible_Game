@@ -8,6 +8,7 @@
  //Se crea GitHub 2/05/20
 
 //Version Modificada de Rodrigo Figueroa y Stefan Schwendener
+// Link del Repositorio de cambios: https://github.com/Ricochetrj/Juego_RF_SS_Impossible_Game.git
 //***************************************************************************************************************************************
 #include <stdint.h>
 #include <stdbool.h>
@@ -305,8 +306,8 @@ if(Multiplayer == 1){
   Serial.println(Points);
   buttonState = digitalRead(buttonPin);
   buttonState2 = digitalRead(buttonPin2);
-    LCD_Sprite(150,yB,16,32,sans,4,animc,0,0);
-    LCD_Sprite(110,yB2,20,40,papyrus,4,animc,0,0);
+    LCD_Sprite(150,yB,16,32,sans,4,animc,0,0); //sans = player 1 sprite
+    LCD_Sprite(110,yB2,20,40,papyrus,4,animc,0,0);//papyrus = player 2 sprite
   FillRect(0, 187, 35, 30, 0x421b);
 
 
