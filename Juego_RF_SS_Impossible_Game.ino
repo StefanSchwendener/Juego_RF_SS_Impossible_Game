@@ -79,7 +79,7 @@ uint8_t buttonStateOld = 0;
 const int buttonPin = PA_6;  
 uint8_t buttonState = 0; 
 
-const int buttonPin2 = PA_5;  
+const int buttonPin2 = PE_2;  
 uint8_t buttonState2; 
 uint8_t buttonStateOld2 = 0;
 uint8_t xspike = 200;
@@ -124,7 +124,7 @@ void setup() {
 Game_Start();
  while(!Start){
   buttonState = digitalRead(buttonPin);
-  buttonState2 = digitalRead(PA_5);
+  buttonState2 = digitalRead(PE_2);
   animate();
     if(buttonState == LOW){
       Start = true;
