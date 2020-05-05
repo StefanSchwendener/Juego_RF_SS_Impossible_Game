@@ -326,18 +326,18 @@ if(Points<200){
   FillRect(xspike+27,189,27,29,0x421b);   
   }
   else if(xspike>292){
-  xspike = 200;
+  xspike = 292;
   }
 }
 
 if(Points>=200 && Points<500){
-  xspike2 = xspike + 100;
+  xspike2 = xspike + 150;
   if(xspike<292){
   LCD_Sprite(xspike,189,27,29,spikes,7,animsp,0,0);
   FillRect(xspike+27,189,27,29,0x421b);   
   }
   else if(xspike>292){
-  xspike = 200;
+  xspike = 292;
   }
 
   if(xspike2<292){
@@ -345,7 +345,7 @@ if(Points>=200 && Points<500){
   FillRect(xspike2+27,189,27,29,0x421b);   
   }
   else if(xspike2>292){
-  xspike2 = xspike + 250;
+  xspike2 = 292;
   }
   
 }
@@ -358,7 +358,7 @@ if(Points>=500 /*&& Points<1000*/){
   FillRect(xspike+27,189,27,29,0x421b);   
   }
   else if(xspike>292){
-  xspike = 200;
+  xspike = 292;
   }
 
   if(xspike2<292){
@@ -366,7 +366,7 @@ if(Points>=500 /*&& Points<1000*/){
   FillRect(xspike2+27,189,27,29,0x421b);   
   }
   else if(xspike2>292){
-  xspike2 = xspike + 250;
+  xspike2 = xspike + 50;
   }
 
   if(xspike3<292){
@@ -374,7 +374,7 @@ if(Points>=500 /*&& Points<1000*/){
   FillRect(xspike3+27,189,27,29,0x421b);   
   }
   else if(xspike3>292){
-  xspike3 = xspike2 + 250;
+  xspike3 = xspike2 + 50;
   }
 }
 ///Plataformas
@@ -942,51 +942,64 @@ uint8_t spike3x1 = xspike3;
 uint8_t spike3x2 = xspike3+27;
 if (Points<200){
  if((cubex2>=spikex1) && (cubex1<=spikex2) &&(cubey2>=spikey1)){
-  gameover();   
+  p2w = 1;
+  winner();   
  }
 
  if((cube2x2>=spikex1) && (cube2x1<=spikex2) &&(cube2y2>=spikey1)){
-  gameover();   
+  p1w = 1;
+  winner();   
  }
 }
 if (Points>=200 && Points<500){
   if((cube2x2>=spikex1) && (cube2x1<=spikex2) &&(cube2y2>=spikey1)){
-  gameover();   
+  p1w = 1;
+  winner(); 
  }
   
   if((cube2x2>=spike2x1) && (cube2x1<=spike2x2) &&(cube2y2>=spike2y1)){
-  gameover();   
+  p1w = 1;
+  winner();   
  }
 
  if((cubex2>=spikex1) && (cubex1<=spikex2) &&(cubey2>=spikey1)){
-  gameover();   
+  p2w = 1;
+  winner();  
  }
   
   if((cubex2>=spike2x1) && (cubex1<=spike2x2) &&(cubey2>=spike2y1)){
-  gameover();   
+  p2w = 1;
+  winner();  
  }
  
 }
 
 if (Points>=500){
   if((cubex2>=spike3x1) && (cubex1<=spike3x2) &&(cubey2>=spike3y1)){
-  gameover();   
+  p2w = 1;
+  winner();   
  }
  if((cubex2>=spike2x1) && (cubex1<=spike2x2) &&(cubey2>=spike2y1)){
-  gameover();   
+  p2w = 1;
+  winner();   
  }
  if((cubex2>=spikex1) && (cubex1<=spikex2) &&(cubey2>=spikey1)){
-  gameover();   
+  p2w = 1;
+  winner();  
  }
 
  if((cube2x2>=spike3x1) && (cube2x1<=spike3x2) &&(cube2y2>=spike3y1)){
-  gameover();   
+  p1w = 1;
+  winner();   
  }
  if((cube2x2>=spike2x1) && (cube2x1<=spike2x2) &&(cube2y2>=spike2y1)){
-  gameover();   
+  p1w = 1;
+  winner();
+  
  }
  if((cube2x2>=spikex1) && (cube2x1<=spikex2) &&(cube2y2>=spikey1)){
-  gameover();   
+  p1w = 1;
+  winner();   
  }
 }
 }
@@ -1042,12 +1055,93 @@ void gameover(){
 
 void winner(void){
  if(p1w == 1){
-   String text1 = "Player 1 Wins";
+   
+  Start = false;
+  FillRect(0, 0, 319, 219, 0x421b);
+  while(!Start){
+  String text1 = "Player 1 Wins";
   LCD_Print(text1, 30, 20, 2, 0xffff, 0xD082);
+  String again = "Press Jump to Start again";
+  LCD_Print(again, 100, 150, 1, 0xf420, 0x0000);
+  make_floor();
+  buttonState = digitalRead(buttonPin);
+    if(buttonState == LOW){
+      Start = true;
+    }
+  }
+  Game_Start();
+  Start = false;
+  while(!Start){
+  buttonState2 = digitalRead(buttonPin2);
+  buttonState = digitalRead(buttonPin);
+    if(buttonState == LOW){
+      Start = true;
+      digitalWrite(PA_7,HIGH);
+      Multiplayer = 0;
+    }
+    if(buttonState2 == LOW){
+      Multiplayer = 1;
+      Start = true;
+      digitalWrite(PA_7,HIGH);
+    }
+  }
+  FillRect(0, 0, 319, 219, 0x421b);
+  String text3 = "Impossible Game!";
+  LCD_Print(text3, 30, 20, 2, 0xffff, 0xD082);
+   make_floor();
+   String score = "Score:";
+  LCD_Print(score, 200, 50, 2, 0x0000, 0xD082);
+  Points = 0;
+  xspike = 292;
+  yB = 187;
+  yB2 = 184;
+  p1w = 0;
+  p2w = 0;
  }
 
  if (p2w == 1){
   String text1 = "Player 2 Wins";
   LCD_Print(text1, 30, 20, 2, 0xffff, 0xD082);
+  Start = false;
+  FillRect(0, 0, 319, 219, 0x421b);
+  while(!Start){
+  String text1 = "Player 2 Wins";
+  LCD_Print(text1, 30, 20, 2, 0xffff, 0xD082);
+  String again = "Press Jump to Start again";
+  LCD_Print(again, 100, 150, 1, 0xf420, 0x0000);
+  make_floor();
+  buttonState = digitalRead(buttonPin);
+    if(buttonState == LOW){
+      Start = true;
+    }
+  }
+  Game_Start();
+  Start = false;
+  while(!Start){
+  buttonState2 = digitalRead(buttonPin2);
+  buttonState = digitalRead(buttonPin);
+    if(buttonState == LOW){
+      Start = true;
+      digitalWrite(PA_7,HIGH);
+      Multiplayer = 0;
+    }
+    if(buttonState2 == LOW){
+      Multiplayer = 1;
+      Start = true;
+      digitalWrite(PA_7,HIGH);
+    }
+  }
+  FillRect(0, 0, 319, 219, 0x421b);
+  String text2 = "Impossible Game!";
+  LCD_Print(text2, 30, 20, 2, 0xffff, 0xD082);
+   make_floor();
+   String score = "Score:";
+  LCD_Print(score, 200, 50, 2, 0x0000, 0xD082);
+  Points = 0;
+  xspike = 302;
+  yB = 187;
+  yB2 = 184;
+  p2w = 0;
+  p1w = 0;
  }
 }
