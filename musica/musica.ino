@@ -1,7 +1,8 @@
 #include "pitches.h"
 
 int senal = HIGH;
-int over = HIGH;
+int over = LOW;
+int pause = LOW;
 
 const int DOOM[] PROGMEM = {
   NOTE_E2, 8, NOTE_E2, 8, NOTE_E3, 8, NOTE_E2, 8, NOTE_E2, 8, NOTE_D3, 8, NOTE_E2, 8, NOTE_E2, 8, //1
@@ -126,6 +127,8 @@ void setup() {
   // CONFIGURACION DE PUERTOS
   pinMode(A1, OUTPUT); // AN1 salida para el buzzer
   pinMode(2, INPUT); // Entrada de senal digital del microcontroladro 2
+  pinMode(3, INPUT); // ENTRADA DE SENAL DIGITAL DE MICROCONTROLADOR 2 PARA GAME OVER
+  pinMode(4, INPUT); // ENTRADA DE SENAL DIGITAL DE MICROCONTROLADOR 2 PARA PAUSA
 }
 
 void loop() {
@@ -133,6 +136,7 @@ void loop() {
     // OBTENEMOS INFORMACION DEL OTRO MICROCONTROLADOR HACIENDO UNA LECTURA DEL PUERTO D2
     senal = digitalRead(2);
     over = digitalRead(3);
+    pause = digitalRead(4);
     // CALCULAMOS LA DURACION DE CADA NOTA CON ESTA FUNCION
     divider = pgm_read_word_near(225+thisNote + 1);
     if (divider > 0) {
@@ -170,11 +174,15 @@ void loop() {
         tone(A1, NOTE_E5, 48);
         delay(48);
         } else if(over == LOW){
+          // Se utilizo el tono de Duane B. obtenido de: https://forum.arduino.cc/index.php?topic=136997.0 para game over
           tone(A1,NOTE_G4);
           delay(250);
           tone(A1,NOTE_C4);
           delay(500);
           noTone(sAudioPin);
+        } else if(pause == LOW){
+          tone(A1, NOTE_G4, 47);
+          delay(120);
         }
         // Limpiamos el ultimo tono
         noTone(A1);
