@@ -159,7 +159,6 @@ Game_Start();
   Puntos = String(Points);
   LCD_Print(Puntos, 200, 70, 2, 0x0000, 0xD082);
   
-  //LCD_Bitmap(0, 0, 320, 240, fondo);
 
  
 }
