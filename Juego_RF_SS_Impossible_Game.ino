@@ -61,6 +61,7 @@ void jump();
 void collision2();
 void jump2();
 void sd_highscore();
+void plataforma();
 extern uint8_t fondo[];
 //extern uint8_t chonk[];
 //extern uint8_t cubo2[];
@@ -109,6 +110,9 @@ uint8_t cube2x1 = 0;
 uint8_t cube2x2 = 0;
 uint8_t p1w = 0;
 uint8_t p2w = 0;
+uint8_t platx1 = 0;
+uint8_t platx2 = 0;
+uint8_t platy1 = 0;
 String Puntos;
 
 File myFile;
@@ -156,6 +160,7 @@ Game_Start();
   LCD_Print(Puntos, 200, 70, 2, 0x0000, 0xD082);
   
   //LCD_Bitmap(0, 0, 320, 240, fondo);
+
  
 }
 //***************************************************************************************************************************************
@@ -385,21 +390,7 @@ if(Points>=500 /*&& Points<1000*/){
   }
 }
 ///Plataformas
-plane = 2;//random(0,3);
-if(plane == 0){
-LCD_Bitmap(xspike, 90, 32, 17, platform);
-FillRect(xspike+32,90,32,17,0x421b);
-}
 
-if(plane == 1){
-LCD_Bitmap(xspike, 120, 32, 17, platform);
-FillRect(xspike+32,120,32,17,0x421b);
-}
-
-if(plane == 2){
-//LCD_Bitmap(xspike-60, 150, 32, 17, platform);
-//FillRect(xspike-60+32,150,32,17,0x421b);
-}
 
 FillRect(0,150,34,17,0x421b);
 
@@ -1188,3 +1179,10 @@ void sd_highscore(){
     Serial.println("Empty");
   }
 }
+ void plataforma(){  
+LCD_Bitmap(xspike, 90, 32, 17, platform);
+FillRect(xspike+32,90,32,17,0x421b);
+platx1 = xspike-32;
+platx2 = xspike;
+platy1 = 90;
+ }
